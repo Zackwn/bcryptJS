@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
-import { CustomThis, CustomQueryThis } from "../../types/CustomThis"
+import { CustomThis } from "../../types/CustomThis"
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
