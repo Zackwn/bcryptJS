@@ -65,5 +65,11 @@
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
-  }
+  },
+  "files": [
+    "./src/types/CustomReq.d.ts",
+    "./src/types/CustomThis.d.ts",
+    "./src/types/User.d.ts",
+    "./src/types/CustomPayload.d.ts"
+  ]
 }
