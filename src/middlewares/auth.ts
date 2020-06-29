@@ -20,16 +20,10 @@ export default async function auth (reqExpress: Request, res: Response, next: Ne
     
         const [ scheme, token ] = parts
     
-        console.log(scheme)
-        console.log(token)
-    
         if (!/^Bearer$/i.test(scheme))
             return res.status(401).send("sem Bearer na length 1")
     
         const payload = jwt.verify(token, String(process.env.APP_SECRET))
-    
-        if (!payload) 
-            return res.status(401).send("payload false")
     
         // Types
         const Payload = payload as CustomPayload
@@ -38,6 +32,6 @@ export default async function auth (reqExpress: Request, res: Response, next: Ne
         req.User_id = Payload.user_id
         next()
     } catch (err) {
-        return res.status(500).send()
+        return res.status(401).send()
     }
 }

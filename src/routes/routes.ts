@@ -4,6 +4,7 @@ const routes = express.Router()
 // Controllers
 import UserController from "../controllers/userController"
 import SessionController from "../controllers/sessionController"
+import { Test } from "../controllers/test"
 
 // Middleware
 import Auth from "../middlewares/auth"
@@ -18,6 +19,6 @@ routes.post("/login", SessionController.login)
 
 routes.use(Auth)
 
-routes.get("/", (_,res) => res.status(200).send())
+routes.get("/", Test)
 
 export default routes
