@@ -1,9 +1,9 @@
 import mongoose, { Document } from "mongoose"
 import bcrypt from "bcryptjs"
-import { CustomThis } from "../../types/CustomThis"
 const Schema = mongoose.Schema
 
 interface User extends Document {
+    id: string,
     name: string,
     email: string,
     password: string,

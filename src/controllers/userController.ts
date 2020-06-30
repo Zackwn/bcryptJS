@@ -1,7 +1,6 @@
 import { Request, Response } from "express"
 import bcrypt from "bcryptjs"
 import Users from "../database/models/UserSchema"
-import { User } from "../types/User"
 
 class UserController {
     async create(req: Request, res: Response) {
