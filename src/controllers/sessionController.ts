@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import Users from "../database/models/UserSchema"
-import { User } from "../types/User"
 import bcrypt from "bcryptjs"
 import jsonwebtoken from "jsonwebtoken"
 import "dotenv/config"
@@ -15,9 +14,7 @@ class SessionController {
             if (!user) 
                 return res.status(400).send("User dont exists")
 
-            const _User = user as unknown as User
-
-            const isPasswordCorrect = await bcrypt.compare(password, _User.password)
+            const isPasswordCorrect = await bcrypt.compare(password, user.password)
 
             if (!isPasswordCorrect) {
                 console.log("Incorrect password")
@@ -26,7 +23,7 @@ class SessionController {
 
             const token = jsonwebtoken.sign(
                 {
-                    user_id: _User.id
+                    user_id: user.id
                 },
                 String(process.env.APP_SECRET),
                 {
