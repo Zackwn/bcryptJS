@@ -70,6 +70,7 @@
     "./src/types/CustomReq.d.ts",
     "./src/types/CustomThis.d.ts",
     "./src/types/User.d.ts",
-    "./src/types/CustomPayload.d.ts"
+    "./src/types/CustomPayload.d.ts",
+    "./src/types/CustomRes.d.ts"
   ]
 }

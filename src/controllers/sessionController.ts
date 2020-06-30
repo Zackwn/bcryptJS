@@ -12,10 +12,8 @@ class SessionController {
 
             const user = await Users.findOne({email})
 
-            if (typeof user === undefined) {
-                console.log("User dont exists")
-                return res.status(400).send("Aqui")
-            }
+            if (!user) 
+                return res.status(400).send("User dont exists")
 
             const _User = user as unknown as User
 

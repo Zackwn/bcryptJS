@@ -10,7 +10,7 @@ class UserController {
             const data = { name, email, password}
     
             const IsUser = await Users.findOne({ email })
-    
+
             if (IsUser) {
                 return res.status(400).send("User alredy exists")
             }
@@ -31,7 +31,7 @@ class UserController {
             const user = await Users.findOne({_id: id})
 
             if (!user) {
-                return res.status(400).send()
+                return res.status(400).send("User don't exists")
             }
 
             const _User = user as unknown as User
