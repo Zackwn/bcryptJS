@@ -17,11 +17,11 @@ routes.use(Responses)
 routes.get("/users", UserController.index)
 routes.post("/create/user", UserController.create)
 routes.post("/login", SessionController.login)
+routes.put("/users/:id/edit", UserController.update)
 
 routes.use(Auth)
 
 // Rotas autenticadas
-routes.put("/users/:id/edit", UserController.update)
 routes.get("/", Test)
 
 export default routes

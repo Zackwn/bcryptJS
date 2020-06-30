@@ -1,7 +1,14 @@
-import mongoose from "mongoose"
+import mongoose, { Document } from "mongoose"
 import bcrypt from "bcryptjs"
 import { CustomThis } from "../../types/CustomThis"
 const Schema = mongoose.Schema
+
+interface User extends Document {
+    name: string,
+    email: string,
+    password: string,
+    createdAt?: Date
+}
 
 const UserSchema = new Schema({
     name: {
@@ -25,7 +32,7 @@ const UserSchema = new Schema({
 })
 
 UserSchema.pre("save", async function(next) {
-    const This = this as CustomThis
+    const This = this as User
     if (This.password) {
         const hashedPassword = await bcrypt.hash(This.password, 8)
         This.password = hashedPassword
@@ -36,4 +43,4 @@ UserSchema.pre("save", async function(next) {
 })
 
 mongoose.model("users", UserSchema)
-export default mongoose.model("users")
+export default mongoose.model<User>("users")

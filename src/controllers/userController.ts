@@ -29,17 +29,15 @@ class UserController {
             const { id } = req.params
 
             const user = await Users.findOne({_id: id})
-
+            
             if (!user) {
                 return res.status(400).send("User don't exists")
             }
 
-            const _User = user as unknown as User
-
-            const { newName = _User.name, newEmail = _User.email, newPassword = false, password } = req.body
+            const { newName = user.name, newEmail = user.email, newPassword = false, password } = req.body
 
                                                      // User typed   DB password (hash)
-            const isPasswordCorrect = await bcrypt.compare(password, _User.password)
+            const isPasswordCorrect = await bcrypt.compare(password, user.password)
 
             if (!isPasswordCorrect) {
                 return res.status(401).send("Incorrect password")
@@ -49,20 +47,25 @@ class UserController {
             if (newPassword) {
                 DbPassword = await bcrypt.hash(newPassword, 8)
             } else {
-                DbPassword = _User.password
+                DbPassword = user.password
             }
 
+            // const userUpdated = await Users.findOne({_id: id})
 
+            const whatBeChanged = {
+                "name": newName !== user.name ? newName : "Don't be changed",
+                "email": newEmail !== user.email ? newEmail : "Don't be changed"
+            }
 
-            const UpdatedUser = await user.updateOne({
+            await user.updateOne({
                 name: newName,
                 email: newEmail,
                 password: DbPassword
             })
 
-            return res.json(UpdatedUser) // before the update
+            return res.json(whatBeChanged) // before the update
         } catch (err) {
-            return res.status(500).send(err)
+            return res.status(500).send("Invalid id")
         }
     }
 
@@ -77,7 +80,11 @@ class UserController {
             if (users.length === 0)
                 return res.status(200).json("No users")
 
-            return res.json(users)
+            const serializedUsers = users.map( user => {
+                return user.name
+            })
+
+            return res.json(serializedUsers)
         } catch (err) {
             return res.status(500).send()
         }
