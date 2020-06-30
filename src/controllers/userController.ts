@@ -4,12 +4,16 @@ import Users from "../database/models/UserSchema"
 
 class UserController {
     async create(req: Request, res: Response) {
+
+        const { name, email, password } = req.body
+        const data = { name, email, password}
+
         try {
-            const { name, email, password } = req.body
-            const data = { name, email, password}
-    
+
+            // Buscando user no banco
             const IsUser = await Users.findOne({ email })
 
+            // Verificando se o user existe
             if (IsUser) {
                 return res.status(400).send("User alredy exists")
             }

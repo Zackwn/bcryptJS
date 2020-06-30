@@ -68,7 +68,6 @@
   },
   "files": [
     "./src/types/CustomReq.d.ts",
-    "./src/types/CustomPayload.d.ts",
-    "./src/types/CustomRes.d.ts"
+    "./src/types/CustomPayload.d.ts"
   ]
 }
