@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import bcrypt from "bcryptjs"
+import bcrypt, { compareSync } from "bcryptjs"
 import Users from "../database/models/UserSchema"
 
 class UserController {
@@ -79,15 +79,28 @@ class UserController {
             const users = await Users.find()
                 .skip((Number(page) - 1) * Number(limit))
                 .limit(Number(limit))
-                
+
             if (users.length === 0)
                 return res.status(200).json("No users")
 
-            const serializedUsers = users.map( user => {
-                return user.name
-            })
+            const _Users = await Users.find()
 
-            return res.json(serializedUsers)
+            const MaxPages = Math.ceil(_Users.length / Number(limit))
+
+            // const serializedUsers = users.map( user => {
+            //     return user.name
+            // })
+
+            // res.header("X-Total-Count", String(MaxPages))
+            
+            const Response = {
+                users,
+                metadata: {
+                    MaxPages
+                }
+            }
+
+            return res.json(Response)
         } catch (err) {
             return res.status(500).send()
         }
